@@ -1,71 +1,68 @@
 'use client';
 
+import { User } from '@prisma/client';
 import Head from 'next/head';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
-
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
-
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-import Logo from '~/svg/Logo.svg';
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+import { useForm } from 'react-hook-form';
 
 export default function HomePage() {
+  const { register, handleSubmit } = useForm<Pick<User, 'name'>>();
+
+  const router = useRouter();
+
+  const onSubmit = async (data: Pick<User, 'name'>) => {
+    try {
+      const res = await fetch('api/user', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ name: data.name }),
+      });
+
+      const body = await res.json();
+
+      router.push(`/${body.data.id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <main>
       <Head>
-        <title>Hi</title>
+        <title>Getting Started</title>
       </Head>
-      <section className='bg-white'>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-          <Logo className='w-16' />
-          <h1 className='mt-4'>Next.js + Tailwind CSS + TypeScript Starter</h1>
-          <p className='mt-2 text-sm text-gray-800'>
-            A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
-            Import, Seo, Link component, pre-configured with Husky{' '}
-          </p>
-          <p className='mt-2 text-sm text-gray-700'>
-            <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-              See the repository
-            </ArrowLink>
-          </p>
-
-          <ButtonLink className='mt-6' href='/components' variant='light'>
-            See all components
-          </ButtonLink>
-
-          <UnstyledLink
-            href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-            className='mt-4'
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              width='92'
-              height='32'
-              src='https://vercel.com/button'
-              alt='Deploy with Vercel'
-            />
-          </UnstyledLink>
-
-          <footer className='absolute bottom-2 text-gray-700'>
-            © {new Date().getFullYear()} By{' '}
-            <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-              Theodorus Clarence
-            </UnderlineLink>
-          </footer>
-        </div>
-      </section>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <section className='bg-white'>
+          <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
+            <div>
+              <h2 className='text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight'>
+                Create Main Character
+              </h2>
+              <div className='mt-3'>
+                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md'>
+                  <input
+                    type='text'
+                    {...register('name')}
+                    className='block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
+                    placeholder='E.g. Donald Duck'
+                  />
+                </div>
+              </div>
+              <div className='mt-3 flex flex-col'>
+                <button
+                  type='submit'
+                  className='rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </form>
     </main>
   );
 }
