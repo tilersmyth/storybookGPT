@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Fragment } from 'react';
 
+import { cn } from '@/lib/utils';
+
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -22,10 +24,6 @@ const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
 ];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default function Header() {
   const pathname = usePathname();
@@ -60,7 +58,7 @@ export default function Header() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={classNames(
+                        className={cn(
                           pathname === item.href
                             ? 'border-b-4 border-indigo-500'
                             : 'hover:border-b-4 hover:border-indigo-300',
@@ -105,7 +103,7 @@ export default function Header() {
                             {({ active }) => (
                               <a
                                 href={item.href}
-                                className={classNames(
+                                className={cn(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
                                 )}
@@ -120,7 +118,7 @@ export default function Header() {
                             <a
                               href='#'
                               onClick={onSignOut}
-                              className={classNames(
+                              className={cn(
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700'
                               )}
@@ -156,7 +154,7 @@ export default function Header() {
                   key={item.name}
                   as={Link}
                   href={item.href}
-                  className={classNames(
+                  className={cn(
                     pathname === item.href
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
