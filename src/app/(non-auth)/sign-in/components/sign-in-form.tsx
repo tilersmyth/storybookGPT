@@ -4,7 +4,7 @@ import * as Auth from '@aws-amplify/auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -19,76 +19,120 @@ const schema = yup.object().shape({
 });
 
 export const SignInForm: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
+    setError,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>({ resolver: yupResolver(schema) });
   const router = useRouter();
 
   const onSubmit = async (data: IFormInput) => {
     try {
+      setLoading(true);
+
+      reset();
+
       await Auth.signIn({
         username: data.email,
         password: data.password,
       });
 
       router.push('/');
-    } catch (error) {
-      console.log('login err: ', error);
+    } catch (error: any) {
+      console.log('ERR: ', error);
+
+      if (error.name === 'NotAuthorizedException') {
+        setError('root', { message: error.message });
+        return;
+      }
+
+      setError('root', { message: 'Unknown error occurred' });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='mt-3'>
-        <label
-          htmlFor='email'
-          className='block text-sm font-medium leading-6 text-gray-900'
-        >
-          E-mail address
-        </label>
-        <div className='mt-2'>
-          <input
-            type='text'
-            id='email'
-            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            {...register('email')}
-          />
-
-          {errors.email && (
-            <p className='text-sm text-red-500'>{errors.email.message}</p>
-          )}
+    <>
+      <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label
+            htmlFor='email'
+            className='block text-sm font-medium leading-6 text-gray-900'
+          >
+            E-mail
+          </label>
+          <div className='mt-2'>
+            <input
+              id='email'
+              type='email'
+              autoComplete='email'
+              required
+              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              {...register('email')}
+            />
+          </div>
         </div>
 
-        <div className='mt-2'>
-          <input
-            type='password'
-            id='password'
-            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            {...register('password')}
-          />
-
-          {errors.password && (
-            <p className='text-sm text-red-500'>{errors.password.message}</p>
-          )}
+        <div>
+          <div className='flex items-center justify-between'>
+            <label
+              htmlFor='password'
+              className='block text-sm font-medium leading-6 text-gray-900'
+            >
+              Password
+            </label>
+            <div className='text-sm'>
+              <Link
+                href='/forgot-password'
+                className='font-semibold text-indigo-600 hover:text-indigo-500'
+              >
+                Forgot password?
+              </Link>
+            </div>
+          </div>
+          <div className='mt-2'>
+            <input
+              id='password'
+              type='password'
+              autoComplete='current-password'
+              required
+              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className='text-sm text-red-500'>{errors.password.message}</p>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className='mt-2'>
-        <button
-          type='submit'
-          className='rounded-md bg-white px-2.5 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+        {errors.root && (
+          <p className='text-sm text-red-500'>{errors.root.message}</p>
+        )}
+
+        <div>
+          <button
+            type='submit'
+            className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+          >
+            Sign in
+          </button>
+        </div>
+      </form>
+
+      <p className='mt-10 text-center text-sm text-gray-500'>
+        Don't have an account?{' '}
+        <Link
+          href='/sign-up'
+          className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
         >
-          Login
-        </button>
-
-        <Link href='/forgot-password'>Forgot Password?</Link>
-      </div>
-
-      <div className='mt-2'>
-        <Link href='/sign-up'>Don't have an account? Create one</Link>
-      </div>
-    </form>
+          Sign up here
+        </Link>
+      </p>
+    </>
   );
 };
