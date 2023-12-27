@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { SignUpForm } from '@/app/sign-up/_components/sign-up-form';
+import { SignUpForm } from '@/app/(non-auth)/sign-up/components/sign-up-form';
 
 export default function SignUpPage() {
   return (

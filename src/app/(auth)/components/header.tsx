@@ -17,7 +17,7 @@ const user = {
 };
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Login', href: '/login' },
+  { name: 'Login', href: '/sign-in' },
   { name: 'Profile', href: '/profile' },
 ];
 const userNavigation = [
@@ -32,7 +32,7 @@ export default function Header() {
   const onSignOut = async () => {
     try {
       await Auth.signOut();
-      router.push('/login');
+      router.push('/sign-in');
     } catch (error) {
       console.log('SIGN OUT ERR: ', error);
     }

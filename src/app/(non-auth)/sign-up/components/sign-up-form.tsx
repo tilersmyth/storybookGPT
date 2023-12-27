@@ -147,7 +147,7 @@ export const SignUpForm: React.FC = () => {
       </div>
 
       <div className='mt-2'>
-        <Link href='/login'>Don't have an account? Create one</Link>
+        <Link href='/sign-in'>Already have an account? Click here</Link>
       </div>
     </form>
   );

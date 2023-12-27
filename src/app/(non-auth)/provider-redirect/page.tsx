@@ -21,7 +21,7 @@ export default function ProviderRedirectPage() {
         await fetchAuthSession();
         router.replace('/');
       } catch (error) {
-        router.replace('/login');
+        router.replace('/sign-in');
       }
     })();
   }, [router]);

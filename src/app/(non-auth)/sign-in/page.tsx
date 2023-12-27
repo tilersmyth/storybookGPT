@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { GoogleSignIn } from '@/app/components/google-signin-btn';
-import { UserLogin } from '@/app/login/_components/user-login';
+import { GoogleSignIn } from '@/app/(non-auth)/sign-in/components/google-signin-btn';
+import { SignInForm } from '@/app/(non-auth)/sign-in/components/sign-in-form';
 
-export default function LoginPage() {
+export default function SignInPage() {
   return (
     <main className='layout relative flex items-center justify-center'>
       <section className='bg-white'>
@@ -13,7 +13,7 @@ export default function LoginPage() {
               Login page!
             </h2>
 
-            <UserLogin />
+            <SignInForm />
 
             <p className='my-3 text-sm'>OR</p>
 

@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import '@/styles/globals.css';
 
-import Header from '@/app/components/header';
 import { siteConfig } from '@/constant/config';
 
 import AmplifyLayout from './components/amplify-layout';
@@ -51,10 +50,7 @@ export default function RootLayout({
   return (
     <html className='h-full'>
       <body className='flex h-full flex-col'>
-        <Header />
-        <div className='flex grow'>
-          <AmplifyLayout>{children}</AmplifyLayout>
-        </div>
+        <AmplifyLayout>{children}</AmplifyLayout>
       </body>
     </html>
   );

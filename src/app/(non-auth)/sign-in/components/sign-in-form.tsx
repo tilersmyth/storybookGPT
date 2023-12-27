@@ -18,7 +18,7 @@ const schema = yup.object().shape({
   password: yup.string().required('Password is required'),
 });
 
-export const UserLogin: React.FC = () => {
+export const SignInForm: React.FC = () => {
   const {
     register,
     handleSubmit,
