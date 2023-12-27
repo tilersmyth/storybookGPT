@@ -3,7 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { runWithAmplifyServerContext } from '@/utils/server-utils';
 
-const NON_AUTH_ROUTES = ['/sign-in', '/sign-up', '/sign-up-confirm'];
+const NON_AUTH_ROUTES = [
+  '/sign-in',
+  '/sign-up',
+  '/sign-up-confirm',
+  '/forgot-password',
+  '/reset-password',
+];
 
 const isNonAuthRoute = (pathname: string) =>
   NON_AUTH_ROUTES.some((route) => pathname.startsWith(route));
