@@ -54,101 +54,123 @@ export const SignUpForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='mt-3'>
-        <div className='mt-2'>
-          <label
-            htmlFor='first_name'
-            className='block text-sm font-medium leading-6 text-gray-900'
-          >
-            First Name
-          </label>
+    <>
+      <div className='mt-10 rounded-md bg-white drop-shadow sm:mx-auto sm:w-full sm:max-w-lg md:p-10'>
+        <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label
+              htmlFor='first_name'
+              className='block text-sm font-medium leading-6 text-gray-900'
+            >
+              First Name
+            </label>
 
-          <input
-            type='text'
-            id='first_name'
-            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            {...register('first_name')}
-          />
+            <div className='mt-2'>
+              <input
+                type='text'
+                id='first_name'
+                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                {...register('first_name')}
+              />
 
-          {errors.first_name && (
-            <p className='text-sm text-red-500'>{errors.first_name.message}</p>
-          )}
-        </div>
+              {errors.first_name && (
+                <p className='text-sm text-red-500'>
+                  {errors.first_name.message}
+                </p>
+              )}
+            </div>
+          </div>
 
-        <div className='mt-2'>
-          <label
-            htmlFor='last_name'
-            className='block text-sm font-medium leading-6 text-gray-900'
-          >
-            Last Name
-          </label>
+          <div>
+            <label
+              htmlFor='last_name'
+              className='block text-sm font-medium leading-6 text-gray-900'
+            >
+              Last Name
+            </label>
 
-          <input
-            type='text'
-            id='last_name'
-            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            {...register('last_name')}
-          />
+            <div className='mt-2'>
+              <input
+                type='text'
+                id='last_name'
+                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                {...register('last_name')}
+              />
 
-          {errors.last_name && (
-            <p className='text-sm text-red-500'>{errors.last_name.message}</p>
-          )}
-        </div>
+              {errors.last_name && (
+                <p className='text-sm text-red-500'>
+                  {errors.last_name.message}
+                </p>
+              )}
+            </div>
+          </div>
 
-        <div className='mt-2'>
-          <label
-            htmlFor='email'
-            className='block text-sm font-medium leading-6 text-gray-900'
-          >
-            E-mail address
-          </label>
+          <div>
+            <label
+              htmlFor='email'
+              className='block text-sm font-medium leading-6 text-gray-900'
+            >
+              E-mail address
+            </label>
 
-          <input
-            type='text'
-            id='email'
-            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            {...register('email')}
-          />
+            <div className='mt-2'>
+              <input
+                type='text'
+                id='email'
+                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                {...register('email')}
+              />
 
-          {errors.email && (
-            <p className='text-sm text-red-500'>{errors.email.message}</p>
-          )}
-        </div>
+              {errors.email && (
+                <p className='text-sm text-red-500'>{errors.email.message}</p>
+              )}
+            </div>
+          </div>
 
-        <div className='mt-2'>
-          <label
-            htmlFor='email'
-            className='block text-sm font-medium leading-6 text-gray-900'
-          >
-            Password
-          </label>
+          <div>
+            <label
+              htmlFor='email'
+              className='block text-sm font-medium leading-6 text-gray-900'
+            >
+              Password
+            </label>
 
-          <input
-            type='password'
-            id='password'
-            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            {...register('password')}
-          />
+            <div className='mt-2'>
+              <input
+                type='password'
+                id='password'
+                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                {...register('password')}
+              />
 
-          {errors.password && (
-            <p className='text-sm text-red-500'>{errors.password.message}</p>
-          )}
-        </div>
+              {errors.password && (
+                <p className='text-sm text-red-500'>
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <button
+              type='submit'
+              className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+            >
+              Sign up
+            </button>
+          </div>
+        </form>
       </div>
 
-      <div className='mt-2'>
-        <button
-          type='submit'
-          className='rounded-md bg-white px-2.5 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+      <p className='mt-10 text-center text-sm text-gray-500'>
+        Already have an account?{' '}
+        <Link
+          href='/sign-in'
+          className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
         >
-          Sign up
-        </button>
-      </div>
-
-      <div className='mt-2'>
-        <Link href='/sign-in'>Already have an account? Click here</Link>
-      </div>
-    </form>
+          Login here
+        </Link>
+      </p>
+    </>
   );
 };
