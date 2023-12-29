@@ -168,7 +168,7 @@ export const SignUpForm: React.FC = () => {
           href='/sign-in'
           className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
         >
-          Login here
+          Sign in here
         </Link>
       </p>
     </>

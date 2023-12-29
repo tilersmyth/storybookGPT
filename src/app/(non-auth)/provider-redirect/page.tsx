@@ -1,7 +1,8 @@
 'use client';
 
 // This endpoint ('/provider-redirect') handles setting the user session on the client when
-// using 3rd party auth
+// using 3rd party auth. There is special provisioning in middleware.ts to allow this route to pass
+// through to set the session if available.
 
 import { fetchAuthSession, signInWithRedirect } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
@@ -31,8 +32,8 @@ export default function ProviderRedirectPage() {
       <section className='bg-white'>
         <div>
           <div>
-            <h2 className='font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight'>
-              redirecting....
+            <h2 className='font-bold leading-7 text-gray-900 sm:truncate sm:text-xl sm:tracking-tight'>
+              Redirecting...
             </h2>
           </div>
         </div>

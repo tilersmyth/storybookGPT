@@ -5,5 +5,11 @@ export default function NonAuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className='flex grow bg-gray-50'>{children}</div>;
+  return (
+    <div className='flex grow bg-gray-50'>
+      <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
+        {children}
+      </div>
+    </div>
+  );
 }

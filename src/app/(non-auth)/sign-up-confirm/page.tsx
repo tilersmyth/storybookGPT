@@ -1,13 +1,11 @@
-import * as React from 'react';
-
-import { SignUpConfirmForm } from '@/app/(non-auth)/sign-up-confirm/components/sign-up-form';
+import { NonAuthHeader } from '@/app/(non-auth)/components/header';
+import { SignUpConfirmForm } from '@/app/(non-auth)/sign-up-confirm/components/sign-up-confirm-form';
 
 export default function SignUpConfirmPage() {
   return (
-    <main className='layout relative flex items-center justify-center'>
-      <section className='bg-white'>
-        <SignUpConfirmForm />
-      </section>
-    </main>
+    <>
+      <NonAuthHeader title='Sign up verification' />
+      <SignUpConfirmForm />
+    </>
   );
 }
