@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { GoogleSignIn } from '@/app/(non-auth)/sign-in/components/google-signin-btn';
 import { SignInForm } from '@/app/(non-auth)/sign-in/components/sign-in-form';
 
 export default function SignInPage() {
@@ -16,17 +15,8 @@ export default function SignInPage() {
           Sign in to your account
         </h2>
       </div>
-      <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <div>
-          <div>
-            <SignInForm />
 
-            <p className='my-3 text-sm'>OR</p>
-
-            <GoogleSignIn />
-          </div>
-        </div>
-      </div>
+      <SignInForm />
     </div>
   );
 }

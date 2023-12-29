@@ -8,6 +8,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import { GoogleSignIn } from '@/app/(non-auth)/sign-in/components/google-signin-btn';
+
+const SUPPORTED_FORM_ERRORS = [
+  'UserNotFoundException',
+  'NotAuthorizedException',
+];
+
 interface IFormInput {
   email: string;
   password: string;
@@ -45,7 +52,7 @@ export const SignInForm: React.FC = () => {
     } catch (error: any) {
       console.log('ERR: ', error);
 
-      if (error.name === 'NotAuthorizedException') {
+      if (SUPPORTED_FORM_ERRORS.includes(error.name)) {
         setError('root', { message: error.message });
         return;
       }
@@ -58,71 +65,83 @@ export const SignInForm: React.FC = () => {
 
   return (
     <>
-      <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label
-            htmlFor='email'
-            className='block text-sm font-medium leading-6 text-gray-900'
-          >
-            E-mail
-          </label>
-          <div className='mt-2'>
-            <input
-              id='email'
-              type='email'
-              autoComplete='email'
-              required
-              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-              {...register('email')}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div className='flex items-center justify-between'>
+      <div className='mt-10 rounded-md bg-white drop-shadow sm:mx-auto sm:w-full sm:max-w-lg md:p-10'>
+        <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+          <div>
             <label
-              htmlFor='password'
+              htmlFor='email'
               className='block text-sm font-medium leading-6 text-gray-900'
             >
-              Password
+              E-mail
             </label>
-            <div className='text-sm'>
-              <Link
-                href='/forgot-password'
-                className='font-semibold text-indigo-600 hover:text-indigo-500'
-              >
-                Forgot password?
-              </Link>
+            <div className='mt-2'>
+              <input
+                id='email'
+                type='email'
+                autoComplete='email'
+                required
+                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                {...register('email')}
+              />
             </div>
           </div>
-          <div className='mt-2'>
-            <input
-              id='password'
-              type='password'
-              autoComplete='current-password'
-              required
-              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className='text-sm text-red-500'>{errors.password.message}</p>
-            )}
+
+          <div>
+            <div className='flex items-center justify-between'>
+              <label
+                htmlFor='password'
+                className='block text-sm font-medium leading-6 text-gray-900'
+              >
+                Password
+              </label>
+              <div className='text-sm'>
+                <Link
+                  href='/forgot-password'
+                  className='font-semibold text-indigo-600 hover:text-indigo-500'
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </div>
+            <div className='mt-2'>
+              <input
+                id='password'
+                type='password'
+                autoComplete='current-password'
+                required
+                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                {...register('password')}
+              />
+              {errors.password && (
+                <p className='text-sm text-red-500'>
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
           </div>
+
+          {errors.root && (
+            <p className='text-sm text-red-500'>{errors.root.message}</p>
+          )}
+
+          <div>
+            <button
+              type='submit'
+              className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+
+        <div className='my-10 flex w-full items-center'>
+          <span className='h-px flex-grow rounded bg-gray-200'></span>
+          <span className='mx-3 text-sm font-medium'>OR</span>
+          <span className='h-px flex-grow rounded bg-gray-200'></span>
         </div>
 
-        {errors.root && (
-          <p className='text-sm text-red-500'>{errors.root.message}</p>
-        )}
-
-        <div>
-          <button
-            type='submit'
-            className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-          >
-            Sign in
-          </button>
-        </div>
-      </form>
+        <GoogleSignIn />
+      </div>
 
       <p className='mt-10 text-center text-sm text-gray-500'>
         Don't have an account?{' '}
