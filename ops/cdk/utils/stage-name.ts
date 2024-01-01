@@ -1,11 +1,8 @@
 import { Construct } from 'constructs';
+import { StageNameEnum } from 'ops/cdk/enums/stage-name';
 
-export const capitalize = (string: string): string => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-export const fetchStageName = (app: Construct) => {
-  let stageName = app.node.tryGetContext('stage');
+export const getStageName = (app: Construct) => {
+  const stageName = app.node.tryGetContext('stage') as StageNameEnum;
 
   if (stageName === undefined) {
     throw new Error(
@@ -13,9 +10,8 @@ export const fetchStageName = (app: Construct) => {
     );
   }
 
-  stageName = String(stageName);
+  const allowedStages = Object.values(StageNameEnum);
 
-  const allowedStages = ['development', 'staging', 'production'];
   if (!allowedStages.includes(stageName)) {
     throw new Error(`Deployment stage must be ${allowedStages.join(' or ')}`);
   }

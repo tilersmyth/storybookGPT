@@ -1,18 +1,18 @@
 import * as cdk from 'aws-cdk-lib';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { Construct } from 'constructs';
+import { StageNameEnum } from 'ops/cdk/enums/stage-name';
+import { getStageName } from 'ops/cdk/utils/stage-name';
 
-import { fetchStageName } from '../utils';
-
-const getEnvCredentials = (env: 'development' | 'production') => {
+const getEnvCredentials = (env: StageNameEnum) => {
   switch (env) {
-    case 'development':
+    case StageNameEnum.DEVELOPMENT:
       return {
         googleClientId: process.env.DEV_GOOGLE_CLIENT_ID || '',
         googleClientSecret: process.env.DEV_GOOGLE_CLIENT_SECRET || '',
       };
 
-    case 'production':
+    case StageNameEnum.PRODUCTION:
       return {
         googleClientId: process.env.GOOGLE_CLIENT_ID || '',
         googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
@@ -30,7 +30,7 @@ export class CognitoUserPoolStack extends cdk.Stack {
     if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET)
       throw new Error('Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET');
 
-    const stageName = fetchStageName(scope);
+    const stageName = getStageName(scope);
 
     const envVars = getEnvCredentials(stageName);
 
