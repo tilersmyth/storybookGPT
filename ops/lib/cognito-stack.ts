@@ -4,6 +4,25 @@ import { Construct } from 'constructs';
 
 import { fetchStageName } from '../utils';
 
+const getEnvCredentials = (env: 'development' | 'production') => {
+  switch (env) {
+    case 'development':
+      return {
+        googleClientId: process.env.DEV_GOOGLE_CLIENT_ID || '',
+        googleClientSecret: process.env.DEV_GOOGLE_CLIENT_SECRET || '',
+      };
+
+    case 'production':
+      return {
+        googleClientId: process.env.GOOGLE_CLIENT_ID || '',
+        googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      };
+
+    default:
+      throw Error(`Invalid environment: ${env}`);
+  }
+};
+
 export class CognitoUserPoolStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
@@ -12,6 +31,8 @@ export class CognitoUserPoolStack extends cdk.Stack {
       throw new Error('Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET');
 
     const stageName = fetchStageName(scope);
+
+    const envVars = getEnvCredentials(stageName);
 
     const userPool = new cognito.UserPool(this, 'CognitoPool', {
       userPoolName: `${stageName}-CognitoPool`,
@@ -55,6 +76,7 @@ export class CognitoUserPoolStack extends cdk.Stack {
       userPoolClientName: `${stageName}-UserPoolClient`,
       authFlows: {
         userPassword: true,
+        userSrp: true,
       },
       supportedIdentityProviders: [
         cognito.UserPoolClientIdentityProvider.GOOGLE,
@@ -77,8 +99,8 @@ export class CognitoUserPoolStack extends cdk.Stack {
       this,
       `${stageName}-GoogleUserPool`,
       {
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientId: envVars.googleClientId,
+        clientSecret: envVars.googleClientSecret,
         userPool,
         scopes: ['profile', 'email', 'openid'],
         attributeMapping: {
