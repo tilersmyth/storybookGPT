@@ -7,9 +7,19 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
+  env: {
+    AWS_COGNITO_REGION: process.env.AWS_COGNITO_REGION,
+    AWS_COGNITO_POOL_ID: process.env.AWS_COGNITO_POOL_ID,
+    AWS_COGNITO_APP_CLIENT_ID: process.env.AWS_COGNITO_APP_CLIENT_ID,
+    AWS_COGNITO_IDENTITY_ID: process.env.AWS_COGNITO_IDENTITY_ID,
+    AWS_OAUTH_DOMAIN: process.env.AWS_OAUTH_DOMAIN,
+    AWS_OAUTH_REDIRECT_SIGNIN:process.env.AWS_OAUTH_REDIRECT_SIGNIN,
+    AWS_OAUTH_REDIRECT_SIGNOUT:process.env.AWS_OAUTH_REDIRECT_SIGNOUT
+  },
+
   // Uncoment to add domain whitelist
   // images: {
-  //   domains: [
+  //   domains: [ 
   //     'res.cloudinary.com',
   //   ],
   // },
