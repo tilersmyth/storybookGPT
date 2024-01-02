@@ -1,5 +1,6 @@
 import { Construct } from 'constructs';
-import { StageNameEnum } from 'ops/cdk/enums/stage-name';
+
+import { StageNameEnum } from '../enums/stage-name';
 
 export const getStageName = (app: Construct) => {
   const stageName = app.node.tryGetContext('stage') as StageNameEnum;

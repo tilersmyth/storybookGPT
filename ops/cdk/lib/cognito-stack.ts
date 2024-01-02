@@ -1,8 +1,10 @@
 import * as cdk from 'aws-cdk-lib';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
-import { StageNameEnum } from 'ops/cdk/enums/stage-name';
-import { getStageName } from 'ops/cdk/utils/stage-name';
+
+import { StageNameEnum } from '../enums/stage-name';
+import { getStageName } from '../utils/stage-name';
 
 const getEnvCredentials = (env: StageNameEnum) => {
   switch (env) {
@@ -26,9 +28,6 @@ const getEnvCredentials = (env: StageNameEnum) => {
 export class CognitoUserPoolStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
-
-    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET)
-      throw new Error('Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET');
 
     const stageName = getStageName(scope);
 
@@ -62,10 +61,10 @@ export class CognitoUserPoolStack extends cdk.Stack {
         createdAt: new cognito.DateTimeAttribute(),
       },
       passwordPolicy: {
-        minLength: 8,
-        requireLowercase: true,
-        requireUppercase: true,
-        requireDigits: true,
+        minLength: StageNameEnum.DEVELOPMENT ? 6 : 8,
+        requireLowercase: stageName != StageNameEnum.DEVELOPMENT,
+        requireUppercase: stageName != StageNameEnum.DEVELOPMENT,
+        requireDigits: stageName != StageNameEnum.DEVELOPMENT,
         requireSymbols: false,
       },
       accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
@@ -83,12 +82,12 @@ export class CognitoUserPoolStack extends cdk.Stack {
       ],
       oAuth: {
         callbackUrls: [
-          stageName === 'development'
+          stageName === StageNameEnum.DEVELOPMENT
             ? 'http://localhost:3000/provider-redirect'
             : 'TO DO',
         ],
         logoutUrls: [
-          stageName === 'development'
+          stageName === StageNameEnum.DEVELOPMENT
             ? 'http://localhost:3000/provider-redirect'
             : 'TO DO',
         ],
@@ -118,5 +117,60 @@ export class CognitoUserPoolStack extends cdk.Stack {
         domainPrefix: `${stageName}-demo-auth-domain`,
       },
     });
+
+    const identityPool = new cognito.CfnIdentityPool(
+      this,
+      `${stageName}-IdentityPool`,
+      {
+        identityPoolName: `${stageName}-IdentityPool`,
+        allowUnauthenticatedIdentities: false,
+        cognitoIdentityProviders: [
+          {
+            clientId: appClient.userPoolClientId,
+            providerName: userPool.userPoolProviderName,
+          },
+        ],
+      }
+    );
+
+    const identityPoolRole = new iam.Role(
+      this,
+      `${stageName}-IdentityPoolAuthenticatedRole`,
+      {
+        assumedBy: new iam.FederatedPrincipal(
+          'cognito-identity.amazonaws.com',
+          {
+            StringEquals: {
+              'cognito-identity.amazonaws.com:aud': identityPool.ref,
+            },
+            'ForAnyValue:StringLike': {
+              'cognito-identity.amazonaws.com:amr': 'authenticated',
+            },
+          },
+          'sts:AssumeRoleWithWebIdentity'
+        ),
+      }
+    );
+
+    identityPoolRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: [
+          'mobileanalytics:PutEvents',
+          'cognito-sync:*',
+          'cognito-identity:*',
+        ],
+        resources: ['*'],
+      })
+    );
+
+    new cognito.CfnIdentityPoolRoleAttachment(
+      this,
+      'IdentityPoolRoleAttachment',
+      {
+        identityPoolId: identityPool.ref,
+        roles: { authenticated: identityPoolRole.roleArn },
+      }
+    );
   }
 }

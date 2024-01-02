@@ -11,8 +11,7 @@ Amplify.configure(
         identityPoolId: process.env.AWS_COGNITO_IDENTITY_ID || '',
         loginWith: {
           oauth: {
-            domain:
-              'development-demo-auth-domain.auth.us-east-1.amazoncognito.com',
+            domain: process.env.AWS_OAUTH_DOMAIN || '',
             scopes: [
               'phone',
               'email',
@@ -20,8 +19,8 @@ Amplify.configure(
               'profile',
               'aws.cognito.signin.user.admin',
             ],
-            redirectSignIn: ['http://localhost:3000/provider-redirect'],
-            redirectSignOut: ['http://localhost:3000/provider-redirect'],
+            redirectSignIn: [process.env.AWS_OAUTH_REDIRECT_SIGNIN || ''],
+            redirectSignOut: [process.env.AWS_OAUTH_REDIRECT_SIGNOUT || ''],
             responseType: 'code',
           },
         },

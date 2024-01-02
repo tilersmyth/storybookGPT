@@ -1,5 +1,5 @@
 {
-  "name": "ops",
+  "name": "cdk",
   "version": "0.1.0",
   "bin": "dist/bin/app.js",
   "scripts": {
@@ -7,7 +7,8 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "deploy_development": "cdk deploy --profile=tyler-dev --context stage=development --all"
+    "deploy_development": "cdk deploy --profile=tyler-dev --context stage=development --all",
+    "destroy_development": "cdk destroy --profile=tyler-dev --context stage=development --all"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
