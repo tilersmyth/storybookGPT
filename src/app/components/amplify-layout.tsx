@@ -32,10 +32,8 @@ Amplify.configure(
   }
 );
 
-export default function AmplifyLayout({
-  children,
-}: {
+interface Props {
   children: React.ReactNode;
-}) {
-  return children;
 }
+
+export const AmplifyLayout: React.FC<Props> = ({ children }) => <>{children}</>;

@@ -5,7 +5,7 @@ import '@/styles/globals.css';
 
 import { siteConfig } from '@/constant/config';
 
-import AmplifyLayout from './components/amplify-layout';
+import { AmplifyLayout } from './components/amplify-layout';
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
