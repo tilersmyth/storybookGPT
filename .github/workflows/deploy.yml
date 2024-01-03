@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: 975050066945.dkr.ecr.us-east-1.amazonaws.com/storybook-app
-  ECS_SERVICE: StorybookAppService
+  ECS_SERVICE: ProdService
   ECS_CLUSTER: ProdCluster
   ECS_TASK_DEFINITION: storybook-app-task-definition.json
   CONTAINER_NAME: storybook-app
