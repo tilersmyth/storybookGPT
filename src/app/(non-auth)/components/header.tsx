@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 interface Props {
@@ -6,7 +7,7 @@ interface Props {
 
 export const NonAuthHeader: React.FC<Props> = ({ title }) => (
   <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-    <img
+    <Image
       className='mx-auto h-10 w-auto'
       src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
       alt='Your Company'

@@ -3,8 +3,10 @@
 import * as Auth from '@aws-amplify/auth';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import React from 'react';
 import { Fragment } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -32,9 +34,12 @@ export default function Header() {
   const onSignOut = async () => {
     try {
       await Auth.signOut();
-      router.push('/sign-in');
+
+      // Note: tried to use router.push("/") here but middleware.ts
+      // would still return an auth session so user wouldn't change routes unless refreshingß
+      router.refresh();
     } catch (error) {
-      console.log('SIGN OUT ERR: ', error);
+      console.error('SIGN OUT ERR: ', error);
     }
   };
 
@@ -46,7 +51,7 @@ export default function Header() {
             <div className='flex h-16 items-center justify-between'>
               <div className='flex items-center'>
                 <div className='flex-shrink-0'>
-                  <img
+                  <Image
                     className='h-8 w-8'
                     src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
                     alt='Your Company'
@@ -81,7 +86,7 @@ export default function Header() {
                       <Menu.Button className='relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
                         <span className='absolute -inset-1.5' />
                         <span className='sr-only'>Open user menu</span>
-                        <img
+                        <Image
                           className='h-8 w-8 rounded-full'
                           src={user.imageUrl}
                           alt=''
@@ -169,7 +174,7 @@ export default function Header() {
             <div className='border-t border-gray-700 pb-3 pt-4'>
               <div className='flex items-center px-5'>
                 <div className='flex-shrink-0'>
-                  <img
+                  <Image
                     className='h-10 w-10 rounded-full'
                     src={user.imageUrl}
                     alt=''

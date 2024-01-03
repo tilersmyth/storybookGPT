@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { GoogleSignIn } from '@/app/(non-auth)/sign-in/components/google-signin-btn';
+import { GoogleSignIn } from './google-signin-btn';
 
 const SUPPORTED_FORM_ERRORS = [
   'UserNotFoundException',
@@ -50,7 +50,7 @@ export const SignInForm: React.FC = () => {
 
       router.push('/');
     } catch (error: any) {
-      console.log('ERR: ', error);
+      console.error('ERR: ', error);
 
       if (SUPPORTED_FORM_ERRORS.includes(error.name)) {
         setError('root', { message: error.message });
@@ -127,6 +127,7 @@ export const SignInForm: React.FC = () => {
           <div>
             <button
               type='submit'
+              disabled={loading}
               className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
             >
               Sign in
