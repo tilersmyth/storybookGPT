@@ -1,9 +1,9 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:975050066945:task-definition/storybook-app-task-definition:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:975050066945:task-definition/storybook-app-task-definition:3",
   "containerDefinitions": [
     {
       "name": "storybook-app",
-      "image": "975050066945.dkr.ecr.us-east-1.amazonaws.com/storybook-app",
+      "image": "975050066945.dkr.ecr.us-east-1.amazonaws.com/storybook-app:f860b8a4715363732d5d91ec21463690d49006d2",
       "cpu": 0,
       "portMappings": [
         {
@@ -16,10 +16,8 @@
       ],
       "essential": true,
       "environment": [],
-      "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
-      "ulimits": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -27,8 +25,7 @@
           "awslogs-group": "/ecs/storybook-app-task-definition",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
-        },
-        "secretOptions": []
+        }
       }
     }
   ],
@@ -36,7 +33,7 @@
   "taskRoleArn": "arn:aws:iam::975050066945:role/ecsTaskExecutionRole",
   "executionRoleArn": "arn:aws:iam::975050066945:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
-  "revision": 1,
+  "revision": 3,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -77,7 +74,7 @@
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2024-01-03T14:08:37.021Z",
-  "registeredBy": "arn:aws:sts::975050066945:assumed-role/OrganizationAccountAccessRole/tilersmyth@gmail.com",
+  "registeredAt": "2024-01-03T20:07:48.155Z",
+  "registeredBy": "arn:aws:sts::975050066945:assumed-role/git-action-cross-account-role/StorybookBuild",
   "tags": []
 }
