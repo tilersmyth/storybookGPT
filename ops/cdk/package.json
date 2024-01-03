@@ -8,7 +8,8 @@
     "test": "jest",
     "cdk": "cdk",
     "deploy_development": "cdk deploy --profile=tyler-dev --context stage=development --all",
-    "destroy_development": "cdk destroy --profile=tyler-dev --context stage=development --all"
+    "destroy_development": "cdk destroy --profile=tyler-dev --context stage=development --all",
+    "deploy_production": "cdk deploy --profile=tyler-prod --context stage=production --all"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
