@@ -1,13 +1,13 @@
 name: Deploy to Amazon ECS
 
-# on:
-#   push:
-#     branches:
-#       - ci-deploy-test
+on:
+  push:
+    branches:
+      - ci-deploy-test
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: testing-ecrRepo
+  ECR_REPOSITORY: testing-ecr-repo
   ECS_SERVICE: testing-ecsService
   ECS_CLUSTER: testing-ecsCluster
   ECS_TASK_DEFINITION: testing-ecsTaskDef
