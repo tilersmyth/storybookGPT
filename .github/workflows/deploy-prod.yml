@@ -7,11 +7,11 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: storybook-app
-  ECS_SERVICE: StorybookWorkerService
-  ECS_CLUSTER: ProdCluster
-  ECS_TASK_DEFINITION: storybook-app-task-definition.json
-  CONTAINER_NAME: storybook-app
+  ECR_REPOSITORY: testing-ecrRepo
+  ECS_SERVICE: testing-ecsService
+  ECS_CLUSTER: testing-ecsCluster
+  ECS_TASK_DEFINITION: testing-ecsTaskDef
+  CONTAINER_NAME: testing-app
 
 jobs:
   deploy:
