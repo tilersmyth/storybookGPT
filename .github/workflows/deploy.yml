@@ -29,7 +29,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: "arn:aws:iam::091750665006:role/git-action-cross-account-role"
+          role-to-assume: "arn:aws:iam::233486974813:role/git-action-cross-account-role"
           role-duration-seconds: 1200 # 20 minutes
           role-session-name: StorybookBuild
           role-skip-session-tagging: true
