@@ -6,7 +6,7 @@ import { SignInForm } from '@/app/(non-auth)/sign-in/components/sign-in-form';
 export default function SignInPage() {
   return (
     <>
-      <NonAuthHeader title='Sign in to your account' />
+      <NonAuthHeader title='Sign in to your account!' />
       <SignInForm />
     </>
   );
