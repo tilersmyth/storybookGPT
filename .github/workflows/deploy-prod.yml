@@ -45,8 +45,8 @@ jobs:
           file: ./Dockerfile
           push: true
           builder: ${{ steps.docker-buildx.outputs.name }}
-          cache-from: |
-            type=registry,ref=${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
+          # cache-from: |
+          #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
           cache-to: type=inline
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
