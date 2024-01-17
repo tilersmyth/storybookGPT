@@ -53,7 +53,13 @@ export default function Header() {
                 <div className='flex-shrink-0'>
                   <Image
                     className='h-8 w-8'
-                    src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
+                    src='mark.svg'
+                    loader={({ src }) =>
+                      `https://tailwindui.com/img/logos/${src}?color=indigo&shade=600`
+                    }
+                    width={0}
+                    height={0}
+                    sizes='100vw'
                     alt='Your Company'
                   />
                 </div>
@@ -89,7 +95,11 @@ export default function Header() {
                         <Image
                           className='h-8 w-8 rounded-full'
                           src={user.imageUrl}
-                          alt=''
+                          loader={({ src }) => src}
+                          width={0}
+                          height={0}
+                          sizes='100vw'
+                          alt='Your Company'
                         />
                       </Menu.Button>
                     </div>
@@ -175,9 +185,13 @@ export default function Header() {
               <div className='flex items-center px-5'>
                 <div className='flex-shrink-0'>
                   <Image
-                    className='h-10 w-10 rounded-full'
+                    className='h-8 w-8 rounded-full'
                     src={user.imageUrl}
-                    alt=''
+                    loader={({ src }) => src}
+                    width={0}
+                    height={0}
+                    sizes='100vw'
+                    alt='Your Company'
                   />
                 </div>
                 <div className='ml-3'>

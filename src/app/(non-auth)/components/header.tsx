@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import React from 'react';
 
@@ -9,9 +11,14 @@ export const NonAuthHeader: React.FC<Props> = ({ title }) => (
   <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
     <Image
       className='mx-auto h-10 w-auto'
-      src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
+      src='mark.svg'
+      loader={({ src }) =>
+        `https://tailwindui.com/img/logos/${src}?color=indigo&shade=600`
+      }
+      width={0}
+      height={0}
+      sizes='100vw'
       alt='Your Company'
-      fill
     />
     <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
       {title}

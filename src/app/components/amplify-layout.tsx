@@ -11,7 +11,9 @@ Amplify.configure(
         identityPoolId: process.env.AWS_COGNITO_IDENTITY_ID || '',
         loginWith: {
           oauth: {
-            domain: process.env.AWS_OAUTH_DOMAIN || '',
+            domain: process.env.AWS_OAUTH_DOMAIN
+              ? process.env.AWS_OAUTH_DOMAIN.replace(/^https?:\/\//, '')
+              : '',
             scopes: [
               'phone',
               'email',
